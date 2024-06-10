@@ -79,6 +79,7 @@ public with sharing class TriggerHandlerClassTwo {
   public static void triggerHandlerBeforeDelete(List<Lead> oldList) {
     for (Lead leadList : oldList) {
       if (leadList.Status == 'Working - Contacted') {
+        //Adding comment
         leadList.addError(
           'Can not delete the lead when the status is Working-Contacted '
         );
