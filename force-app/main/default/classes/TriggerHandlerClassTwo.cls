@@ -86,4 +86,70 @@ public with sharing class TriggerHandlerClassTwo {
       }
     }
   }
+
+  public static void TriggerHandlerAfterDelete(List<Opportunity> oldList) {
+    List<Task> tasksToCreate = new List<Task>();
+    for (Opportunity oppList : oldList) {
+      Account accList = [
+        SELECT OwnerId
+        FROM Account
+        WHERE Id = :oppList.AccountId
+        LIMIT 1
+      ];
+      system.debug('accList::' + accList);
+
+      Task taskList = new Task();
+      taskList.Description = 'Investigate why opportunity has been deleted';
+      taskList.Priority = 'High';
+      taskList.OwnerId = accList.OwnerId;
+      taskList.WhatId = oppList.AccountId;
+      taskList.Status = 'Not Started';
+
+      system.debug('taskList::' + taskList);
+
+      tasksToCreate.add(taskList);
+    }
+    if (!tasksToCreate.isEmpty()) {
+      system.debug('tasksToCreate::' + tasksToCreate);
+      insert tasksToCreate;
+    }
+  }
+  // public static void TriggerHandlerBeforeInsert(
+  //   Map<Id, Contact> oldMap,
+  //   map<Id, Contact> newMap
+  // ) {
+  //   for (Id accList : newMap.keySet()) {
+  //     if (
+  //       oldMap.get(accList).LastName == newMap.get(accList).LastName &&
+  //       oldMap.get(accList).Email == newMap.get(accList).Email &&
+  //       oldMap.get(accList).Phone == newMap.get(accList).Phone
+  //     ) {
+  //       System.debug(
+  //         oldMap.get(accList).LastName +
+  //           oldMap.get(accList).Email +
+  //           oldMap.get(accList).Phone
+  //       );
+  //       newMap.get(accList).addError('Can not enter the duplicate values');
+  //     }
+  //   }
+  // }
+  public static void TriggerHandlerBeforeInsert(List<Contact> newList) {
+    List<Contact> oldRecords = [
+      SELECT id, LastName, Email, Phone
+      FROM Contact
+      LIMIT 5000
+    ];
+
+    for (Contact newRecord : newList) {
+      for (Contact conRecord : oldRecords) {
+        if (
+          conRecord.LastName == newRecord.LastName &&
+          conRecord.Phone == newRecord.Phone &&
+          conRecord.Email == newRecord.Email
+        ) {
+          newRecord.addError('Duplicate records can not be created');
+        }
+      }
+    }
+  }
 }
