@@ -1,0 +1,6 @@
+<aura:component >
+	is my browers running on andriod : {!$Browser.isTablet}
+     <br></br>
+    where is my browser running : {!$Browser.formFactor}
+   
+</aura:component>
