@@ -73,7 +73,7 @@ public with sharing class TriggerHandlerClassTwo {
     }
 
     if (!conList.isEmpty())
-      insert conList;
+      insert conList; //insertion of list
   }
 
   public static void triggerHandlerBeforeDelete(List<Lead> oldList) {
