@@ -52,7 +52,7 @@ public with sharing class TriggerHandlerClassTwo {
         conUpdateList.add(con);
       }
       if (!conUpdateList.isEmpty()) {
-        update conUpdateList;
+        update conUpdateList; //Upadting the list
       }
     }
   }
