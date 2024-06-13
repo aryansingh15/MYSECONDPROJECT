@@ -5,4 +5,4 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
-mapCollection.mapCollection2();
+futureMethodNew
