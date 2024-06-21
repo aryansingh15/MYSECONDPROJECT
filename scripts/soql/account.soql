@@ -3,4 +3,5 @@
 //     query text and running the command:
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
-SELECT id, Name from Profile
+SELECT Id, Name
+      FROM Football_Players__c
