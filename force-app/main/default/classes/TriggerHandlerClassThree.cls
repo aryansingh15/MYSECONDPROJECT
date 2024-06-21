@@ -6,7 +6,7 @@ public with sharing class TriggerHandlerClassThree {
       oppIdList.add(oppId.Id);
     }
     List<OpportunityTeamMember> teamMembers = [
-      SELECT Id, OpportunityId
+      SELECT Id, 
       FROM OpportunityTeamMember
       WHERE OpportunityId IN :oppIdList
     ];
